@@ -11,11 +11,6 @@ struct NotificationWebhookMessage {
     content: String,
 }
 
-#[derive(Clone, Debug, Deserialize, Serialize)]
-struct NotificationRequest {
-    message: String,
-}
-
 #[get("/")]
 #[instrument]
 async fn index() -> impl Responder {
@@ -32,7 +27,7 @@ async fn post_notify(req_body: String, data: web::Data<AppState>) -> impl Respon
 }
 
 async fn post_notify_inner(req_body: String, data: web::Data<AppState>) -> Result<String, String> {
-    let req_body = serde_json::from_str::<NotificationRequest>(&req_body)
+    let req_body = serde_json::from_str::<twba_common::notify::NotificationRequest>(&req_body)
         .map_err(|e| format!("Could not parse request body: {e}"))
         .map(|req| NotificationWebhookMessage {
             content: req.message,

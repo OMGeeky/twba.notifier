@@ -3387,9 +3387,10 @@ dependencies = [
 
 [[package]]
 name = "twba-common"
-version = "0.2.2"
-source = "git+https://github.com/OMGeeky/twba.common.git#f5e537c3a3d70a6f21ac1b354ae390ecba7bb057"
+version = "0.2.3"
+source = "git+https://github.com/OMGeeky/twba.common.git#3e502063cc36b06c0d2aa41bddd89f999f35d6e8"
 dependencies = [
+ "serde",
  "tracing",
  "tracing-appender",
  "tracing-subscriber",
