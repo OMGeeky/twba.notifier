@@ -53,6 +53,7 @@ async fn post_notify_inner(req_body: String, data: web::Data<AppState>) -> Resul
     }
 }
 
+#[instrument(skip(webhook_url))]
 async fn notify_webhook(
     webhook_url: &str,
     req_body: &NotificationWebhookMessage,
@@ -71,8 +72,9 @@ async fn notify_webhook(
         .map_err(|e| format!("Could not notify webhook (text response): {e}"))
 }
 #[actix_web::main]
+#[instrument]
 async fn main() -> std::io::Result<()> {
-    let _guard = init_tracing("twba_common");
+    let _guard = init_tracing("twba_notifier");
     HttpServer::new(|| {
         App::new()
             .app_data(web::Data::new(AppState {
